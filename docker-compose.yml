@@ -3,14 +3,15 @@ services:
     container_name: frigate
     restart: unless-stopped
     image: ghcr.io/blakeblackshear/frigate:stable
+    privileged: true
+    network_mode: host
+    security_opt:
+      - seccomp=unconfined
+      - apparmor=unconfined
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./config/frigate.yml:/config/config.yml
       - /opt/frigate/storage:/media/frigate
-    ports:
-      - "5000:5000"     # Frigate web UI
-      - "8554:8554"     # RTSP restream
-      - "8555:8555/tcp" # WebRTC
-      - "8555:8555/udp"
+    # Ports exposed via host network: 5000 (UI), 8554 (RTSP), 8555 (WebRTC)
     environment:
       - FRIGATE_RTSP_PASSWORD=${FRIGATE_RTSP_PASSWORD:-}
