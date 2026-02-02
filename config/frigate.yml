@@ -1,0 +1,15 @@
+mqtt:
+  enabled: false
+
+detectors:
+  cpu:
+    type: cpu
+    num_threads: 2
+
+cameras: {}
+
+record:
+  enabled: false
+
+snapshots:
+  enabled: false
